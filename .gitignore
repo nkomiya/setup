@@ -1,0 +1,2 @@
+/scripts/etc/completion.d/*
+!/scripts/etc/completion.d/.gitkeep
