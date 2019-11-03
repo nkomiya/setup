@@ -5,25 +5,25 @@ Mac OS の開発環境構築についてメモ.
 bash
 
 ## Prerequistes
-+ Command Line Tools for Xcode
++ Command Line Tools for Xcode  
 下記リンクから「Command Line Tools for Xcode」をダウンロードし、インストール
 [https://developer.apple.com/download/more](https://developer.apple.com/download/more)
 
-+ Homebrew
++ Homebrew  
 Package管理は [Homebrew](https://brew.sh/) で行う。インストールは下記コマンド。
 
 ```bash
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-+ Git
++ Git  
 補完を効かせたりするため、Homebrew 経由で git をインストールし、Git のバージョンを上げておく。
 
 ```bash
 $ brew update && brew install git
 ```
 
-+ Font
++ Font  
 プロンプトで特殊文字を使うため、[適当なフォント](https://github.com/powerline/fonts/blob/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20for%20Powerline.ttf) を入れておく。ttf ファイルのダウンロード後、Font Book.app で有効化する。
 
 ## Installation
@@ -71,7 +71,7 @@ $ jenv add $(/usr/libexec/java_home 8)
 + tgz ファイルをダウンロード
 [https://cloud.google.com/sdk/docs/downloads-versioned-archives#installation_instructions](https://cloud.google.com/sdk/docs/downloads-versioned-archives#installation_instructions)
 
-+ tar ファイルを解凍
++ tar ファイルの解凍、初期設定
 
 ```bash
 $ cd ~
