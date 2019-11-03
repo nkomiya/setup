@@ -70,7 +70,7 @@ __my_ps1() {
 	tput setaf 50 && tput setab ${_ab} && echo -n ""
 	tput setaf ${_af} && printf " %s" " ${brname}"
 	if [ ! -z "${ahead}" ] || [ ! -z "${behind}" ]; then
-	    echo -n ""
+	    echo -n " "
 	    [ ! -z "${ahead}" ] && printf " %d ahead" ${ahead}
 	    [ ! -z "${behind}" ] && printf " %d behind" ${behind}
 	fi
