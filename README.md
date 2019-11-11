@@ -16,6 +16,12 @@ Package管理は [Homebrew](https://brew.sh/) で行う。インストールは�
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
++ source highlight
+
+```bash
+$ brew install source-highlight
+```
+
 + Git  
 補完を効かせたりするため、Homebrew 経由で git をインストールし、Git のバージョンを上げておく。
 
