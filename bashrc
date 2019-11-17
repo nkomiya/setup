@@ -54,7 +54,7 @@ __my_ps1() {
 	# git
 	brname=$(git branch --show-current)
 	upstreamInfo=$(git st -sb | head -n 1 | sed -e "s/## ${brname//\//\/}//" -e "s/^\.\.\.//")
-	if [ ! -z "${upstreamInfo}" ] && [ "${upstreamInfo}" != "## No commits yet on master" ]; then
+	if [ ! -z "${upstreamInfo}" ] && [[ ! "${upstreamInfo}" =~ ^##\ No\ commits\ yet\ on ]]; then
 	    _af=231
 	    _ab=9
 	    #
