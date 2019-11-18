@@ -2,6 +2,7 @@
 alias ls='ls -G'
 alias ll='ls -ltr'
 alias la='ls -a'
+alias grep='grep --color=auto'
 alias brew="PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin brew"
 alias sv='f(){ __view_source $@; }; f'
 
@@ -54,7 +55,7 @@ __my_ps1() {
 	# git
 	brname=$(git branch --show-current)
 	upstreamInfo=$(git st -sb | head -n 1 | sed -e "s!## ${brname}!!" -e "s/^\.\.\.//")
-	if [ ! -z "${upstreamInfo}" ] && [ "${upstreamInfo}" != "## No commits yet on master" ]; then
+	if [ ! -z "${upstreamInfo}" ] && [[ ! "${upstreamInfo}" =~ "## No commits yet on" ]]; then
 	    _af=231
 	    _ab=9
 	    #
