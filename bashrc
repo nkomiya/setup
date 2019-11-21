@@ -33,53 +33,62 @@ __view_source() {
 #================================================== PS1
 __my_ps1() {
     local dname brname upstreamInfo ahead behind modified
-    local _af _ab
+    local _af _ab _ab_prev
 
     # time
     tput setab 230 && tput setaf 0
     printf " %s " "$1"
     tput setaf 230 && tput setab 50
-    printf "%s" ""
+    echo -n ""
 
     # directory
+    tput setab 50 && tput setaf 0
     dname=$(__dirname_ps1 "$2" "$3")
-    tput setaf 0
     printf " %s " "${dname}"
-    tput sgr0
+    _ab_prev=50
 
+    # terraform
+    if [ -d ".terraform" ]; then
+	tput setab 39 && tput setaf ${_ab_prev}
+	echo -n ""
+	#
+	tput setab 39 && tput setaf 0
+	printf " tf:%s " "$(terraform workspace show)"
+	_ab_prev=39
+    fi
+    
     # git
     git status -sb > /dev/null 2>&1
     if [ $? -ne 0 ]; then
-	tput sgr0 && tput setaf 50 && echo -n ""
+     	tput sgr0 && tput setaf ${_ab_prev} && echo -n ""
     else
-	# git
+     	# git
 	brname=$(git branch --show-current)
-	upstreamInfo=$(git status -sb | head -n 1 | sed -e "s!## ${brname}!!" -e "s/^\.\.\.//")
-	modified=$(git status -sb | sed -e 1,1d | wc -l | awk '{print $1}')
-	if [ ! -z "${upstreamInfo}" ] && [[ ! "${upstreamInfo}" =~ "## No commits yet on" ]]; then
-	    _af=231
-	    _ab=9
-	    #
-	    echo "${upstreamInfo}" | grep -E "ahead [0-9]+" >/dev/null 2>&1 &&
-		ahead=$(echo "${upstreamInfo}" | sed -e "s/^.*ahead \([0-9]\{1,\}\).*$/\1/")
-	    echo "${upstreamInfo}" | grep -E "behind [0-9]+" >/dev/null 2>&1 &&
-		behind=$(echo "${upstreamInfo}" | sed -e "s/^.*behind \([0-9]\{1,\}\).*$/\1/")
-	    # modified files
-	else
-	    _af=0
-	    _ab=47
-	fi
+    	upstreamInfo=$(git status -sb | head -n 1 | sed -e "s!## ${brname}!!" -e "s/^\.\.\.//")
+    	modified=$(git status -sb | sed -e 1,1d | wc -l | awk '{print $1}')
+    	if [ ! -z "${upstreamInfo}" ] && [[ ! "${upstreamInfo}" =~ "## No commits yet on" ]]; then
+    	    _af=231
+    	    _ab=9
+    	    #
+    	    echo "${upstreamInfo}" | grep -E "ahead [0-9]+" >/dev/null 2>&1 &&
+    		ahead=$(echo "${upstreamInfo}" | sed -e "s/^.*ahead \([0-9]\{1,\}\).*$/\1/")
+    	    echo "${upstreamInfo}" | grep -E "behind [0-9]+" >/dev/null 2>&1 &&
+    		behind=$(echo "${upstreamInfo}" | sed -e "s/^.*behind \([0-9]\{1,\}\).*$/\1/")
+    	else
+    	    _af=0
+    	    _ab=47
+    	fi
 
-	tput setaf 50 && tput setab ${_ab} && echo -n ""
-	tput setaf ${_af} && printf " %s" " ${brname}"
-	if [ ! -z "${ahead}" ] || [ ! -z "${behind}" ] || [ ${modified} -ne 0 ]; then
-	    echo -n " "
-	    [ ! -z "${ahead}" ] && printf " %dA" ${ahead}
-	    [ ! -z "${behind}" ] && printf " %dB" ${behind}
-	    [ ${modified} -ne 0 ] && printf " %dM" ${modified}
-	fi
-	echo -n " "
-	tput sgr0 && tput setaf ${_ab} && echo -n ""
+    	tput setaf ${_ab_prev} && tput setab ${_ab} && echo -n ""
+    	tput setaf ${_af} && printf " %s" " ${brname}"
+    	if [ ! -z "${ahead}" ] || [ ! -z "${behind}" ] || [ ${modified} -ne 0 ]; then
+    	    echo -n " "
+    	    [ ! -z "${ahead}" ] && printf " %dA" ${ahead}
+    	    [ ! -z "${behind}" ] && printf " %dB" ${behind}
+    	    [ ${modified} -ne 0 ] && printf " %dM" ${modified}
+    	fi
+    	echo -n " "
+    	tput sgr0 && tput setaf ${_ab} && echo -n ""
     fi
 
     tput sgr0
