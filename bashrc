@@ -1,6 +1,6 @@
 #================================================== alias
 alias ls='ls -G'
-alias ll='ls -ltr'
+alias ll='ls -ltr'a
 alias la='ls -a'
 alias grep='grep --color=auto'
 alias brew="PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin brew"
@@ -32,7 +32,7 @@ __view_source() {
 
 #================================================== PS1
 __my_ps1() {
-    local dname brname upstreamInfo ahead behind
+    local dname brname upstreamInfo ahead behind modified
     local _af _ab
 
     # time
@@ -48,13 +48,14 @@ __my_ps1() {
     tput sgr0
 
     # git
-    git st -sb > /dev/null 2>&1
+    git status -sb > /dev/null 2>&1
     if [ $? -ne 0 ]; then
 	tput sgr0 && tput setaf 50 && echo -n ""
     else
 	# git
 	brname=$(git branch --show-current)
-	upstreamInfo=$(git st -sb | head -n 1 | sed -e "s!## ${brname}!!" -e "s/^\.\.\.//")
+	upstreamInfo=$(git status -sb | head -n 1 | sed -e "s!## ${brname}!!" -e "s/^\.\.\.//")
+	modified=$(git status -sb | sed -e 1,1d | wc -l | awk '{print $1}')
 	if [ ! -z "${upstreamInfo}" ] && [[ ! "${upstreamInfo}" =~ "## No commits yet on" ]]; then
 	    _af=231
 	    _ab=9
@@ -63,6 +64,7 @@ __my_ps1() {
 		ahead=$(echo "${upstreamInfo}" | sed -e "s/^.*ahead \([0-9]\{1,\}\).*$/\1/")
 	    echo "${upstreamInfo}" | grep -E "behind [0-9]+" >/dev/null 2>&1 &&
 		behind=$(echo "${upstreamInfo}" | sed -e "s/^.*behind \([0-9]\{1,\}\).*$/\1/")
+	    # modified files
 	else
 	    _af=0
 	    _ab=47
@@ -70,10 +72,11 @@ __my_ps1() {
 
 	tput setaf 50 && tput setab ${_ab} && echo -n ""
 	tput setaf ${_af} && printf " %s" " ${brname}"
-	if [ ! -z "${ahead}" ] || [ ! -z "${behind}" ]; then
+	if [ ! -z "${ahead}" ] || [ ! -z "${behind}" ] || [ ${modified} -ne 0 ]; then
 	    echo -n " "
-	    [ ! -z "${ahead}" ] && printf " %d ahead" ${ahead}
-	    [ ! -z "${behind}" ] && printf " %d behind" ${behind}
+	    [ ! -z "${ahead}" ] && printf " %dA" ${ahead}
+	    [ ! -z "${behind}" ] && printf " %dB" ${behind}
+	    [ ${modified} -ne 0 ] && printf " %dM" ${modified}
 	fi
 	echo -n " "
 	tput sgr0 && tput setaf ${_ab} && echo -n ""
