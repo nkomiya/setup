@@ -12,8 +12,3 @@ git config --global color.diff.new '110'
 git config --global pager.log 'diff-highlight | less'
 git config --global pager.show 'diff-highlight | less'
 git config --global pager.diff 'diff-highlight | less'
-
-# kubectl
-gitroot=$(cd $(dirname $0) && git rev-parse --show-toplevel)
-[ ! -z "$(which kubectl)" ] &&
-    kubectl completion bash > ${gitroot}/scripts/etc/completion.d/kubectl-completion.bash
