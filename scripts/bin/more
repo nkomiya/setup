@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: sv FILENAME"
+    exit 1
+fi
+
+fname=$1
+shift
+if [ ! -f "${fname}" ]; then
+    echo "${fname}: No such file"
+    exit 1
+fi
+
+# color schema
+schema_file="${HOME}/.scripts/share/source-highlight/conf"
+if [[ -f "${schema_file}" ]]; then
+    schema="--style-file ${schema_file}"
+fi
+
+# start pager
+/usr/local/bin/source-highlight --failsafe ${schema} -f esc -i ${fname} $@ | /usr/bin/less -R

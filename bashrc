@@ -10,27 +10,7 @@ alias date2ts='__f(){ date -j -f "%Y/%m/%d-%H:%M:%S" "$1" "+%s"; }; __f'
 alias docker-tags='__f(){
     curl -s https://registry.hub.docker.com/v1/repositories/$1/tags | jq -r .[].name
 }; __f'
-alias sv='__f() {
-    if [ $# -eq 0 ]; then
-      echo "Usage: sv FILENAME"
-      return 1
-    fi
-
-    local fname=$1; shift;
-    if [ ! -f "${fname}" ]; then
-        echo "${fname}: No such file"
-        return 1
-    fi
-
-    # color schema
-    local schema_file="${HOME}/.scripts/share/source-highlight/conf"
-    if [[ -f "${schema_file}" ]]; then
-        local schema="--style-file ${schema_file}"
-    fi
-
-    # start pager
-    /usr/local/bin/source-highlight --failsafe ${schema} -f esc -i ${fname} $@ | /usr/bin/less -R
-}; __f'
+alias more='${HOME}/.scripts/bin/more'
 
 #================================================== aws
 complete -C "${HOME}/aws-cli/bin/aws_completer" aws

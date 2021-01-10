@@ -56,9 +56,6 @@ $ brew update && brew install source-highlight
 ```bash
 # インストールコマンド
 $ brew update && brew install git
-
-# 設定更新
-bash $(git rev-parse --show-toplevel)/helper/configure_git.sh
 ```
 
 ### Python
@@ -89,8 +86,11 @@ helper/my_powerline.terminal を terminal.app にインポート
 上書きで更新する。
 
 ```bash
+# 個人環境の設定でテンプレートを上書き
+$ bash $(git rev-parse --show-toplevel)/helper/configure.sh
+
 # bash_profile
-$ cp $(git rev-parse --show-toplevel)/bash_profile >~/.bash_profile
+$ cat $(git rev-parse --show-toplevel)/build/bash_profile >~/.bash_profile
 
 # bashrc
 $ cat $(git rev-parse --show-toplevel)/bashrc >~/.bashrc

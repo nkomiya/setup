@@ -10,11 +10,14 @@ export LC_MONETARY=ja_JP.UTF-8
 export LC_NUMERIC=ja_JP.UTF-8
 export LC_TIME=en_US.UTF-8
 
-#================================================== aws
-export PATH=${PATH}:${HOME}/aws-cli/bin
-
 #================================================== gcp
 export CLOUDSDK_PYTHON=${HOME}/pyenv/shims/python3
+export GOOGLE_APPLICATION_CREDENTIALS=REPLACE-GOOGLE_APPLICATION_CREDENTIALS
+
+#================================================== aws
+export PATH=${PATH}:${HOME}/aws-cli/bin
+# AWS default profile
+export AWS_PROFILE=REPLACE-AWS_PROFILE
 
 #================================================== Homebrew
 # Note
@@ -101,6 +104,9 @@ export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
 [ -d '/usr/local/opt/gnu-getopt' ] &&
   export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 
+#================================================== spark
+export PATH="${PATH}:REPLACE-SPARK_BIN_DIR"
+
 #================================================== completion
 # bash completion
 [ -f $(brew --prefix)/etc/bash_completion ] &&
@@ -111,10 +117,6 @@ export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
   . "${HOME}/google-cloud-sdk/path.bash.inc"
 [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ] &&
   . "${HOME}/google-cloud-sdk/completion.bash.inc"
-
-# terraform
-[ -f '/usr/local/bin/terraform' ] &&
-  complete -C /usr/local/bin/terraform terraform
 
 # docker
 [ -f '/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion' ] &&
