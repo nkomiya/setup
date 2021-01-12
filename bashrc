@@ -3,14 +3,23 @@ alias ls='ls -G'
 alias ll='ls -ltr'
 alias la='ls -a'
 alias grep='grep --color=auto'
-alias brew="PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin brew"
+alias zcat='gzcat'
+# software
+alias edit='open -a textedit'
 alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
+alias brew="PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin brew"
+# GCP
+alias sa='f() { echo $1@$(gcloud config get-value core/project).iam.gserviceaccount.com; }; f'
+alias get-sa='cat ${GOOGLE_APPLICATION_CREDENTIALS} | jq -r .client_email'
+alias gcurl='curl -H "Authorization: Bearer "$(gcloud auth application-default print-access-token)'
+alias gcurl-user='curl -H "Authorization: Bearer "$(gcloud auth print-identity-token)'
+alias dev_server="dev_appserver.py --storage_path=.LOCAL-STORAGE"
+# kubeflow
+alias kfctl=${HOME}/kfctl/kfctl
+# custom
+alias more='${HOME}/.scripts/bin/more'
 alias ts2date='__f(){ date -r $1 "+%Y/%m/%d-%H:%M:%S %Z"; }; __f'
 alias date2ts='__f(){ date -j -f "%Y/%m/%d-%H:%M:%S" "$1" "+%s"; }; __f'
-alias docker-tags='__f(){
-    curl -s https://registry.hub.docker.com/v1/repositories/$1/tags | jq -r .[].name
-}; __f'
-alias more='${HOME}/.scripts/bin/more'
 
 #================================================== aws
 complete -C "${HOME}/aws-cli/bin/aws_completer" aws

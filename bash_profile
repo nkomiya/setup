@@ -10,6 +10,16 @@ export LC_MONETARY=ja_JP.UTF-8
 export LC_NUMERIC=ja_JP.UTF-8
 export LC_TIME=en_US.UTF-8
 
+#================================================== others
+# add path to custom scripts
+export PATH="$PATH:${HOME}/.scripts/bin"
+# default editor
+export EDITOR=nano
+# Xcode
+export SDKROOT="macosx10.14"
+# enable forward search with ctrl-s
+stty stop undef
+
 #================================================== gcp
 export CLOUDSDK_PYTHON=${HOME}/pyenv/shims/python3
 export GOOGLE_APPLICATION_CREDENTIALS=REPLACE-GOOGLE_APPLICATION_CREDENTIALS
@@ -29,8 +39,9 @@ if [ ! -z "$(which brew)" ]; then
 fi
 
 #================================================== direnv
-export EDITOR=nano
-eval "$(direnv hook bash)"
+if which direnv &>/dev/null; then
+    eval "$(direnv hook bash)"
+fi
 
 #================================================== pyenv
 # Note
