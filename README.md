@@ -31,7 +31,8 @@ bash
 
 ### Command Line Tools for Xcode
 
-[ここ](https://developer.apple.com/download/more)から「Command Line Tools for Xcode」をダウンロードし、インストール。
+1. [ここ](https://developer.apple.com/xcode/whats-new/) から利用可能な Xcode のバージョンを調べる
+2. [ここ](https://developer.apple.com/download/all/?q=Command%20Line%20Tools%20for%20Xcode) から CLT をインストール
 
 ### Homebrew
 
